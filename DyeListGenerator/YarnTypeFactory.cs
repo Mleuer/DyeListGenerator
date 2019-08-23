@@ -1,10 +1,11 @@
 using System;
+using System.Linq;
 
 namespace DyeListGenerator
 {
     public static class YarnTypeFactory
     {
-        public static YarnType createYarnTypeFromText(string input)
+        public static YarnType CreateYarnTypeCodeFromText(string input)
         {
             String upperInput = input.ToUpper();
             switch (upperInput)
@@ -35,11 +36,14 @@ namespace DyeListGenerator
                     return YarnType.BFLSock;
                 case "BDK":
                     return YarnType.BFLDK;
-                case "CM":
-                    return YarnType.Custom;
                 default:
                     throw new ArgumentException("Yarn Type Does Not Exist");
             }
+        }
+
+        public static void ConvertToMiniSkeinType(Yarn yarn)
+        {
+            throw new NotImplementedException();
         }
     }
     
@@ -58,6 +62,18 @@ namespace DyeListGenerator
         BFL2Ply,
         BFLSock,
         BFLDK,
-        Custom
+        MiniClassy,
+        MiniClassyWCashmere,
+        MiniSmooshy,
+        MiniSmooshyWCashmere,
+        MiniJilly,
+        MiniJillyWCashmere,
+        MiniJillyLaceCashmere,
+        MiniCosette,
+        MiniCity,
+        MiniMohair,
+        MiniBFL2Ply,
+        MiniBFLSock,
+        MiniBFLDK
     }
 }

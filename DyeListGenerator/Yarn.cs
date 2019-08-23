@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Numerics;
 using System.Text;
 using Microsoft.VisualBasic.CompilerServices;
@@ -7,27 +8,41 @@ namespace DyeListGenerator
 {
     public class Yarn
     {
-        public YarnType Type { get; }
-        public int NumberOfSkeins { get; }
+        public double NumberOfSkeins { get; }
+        public YarnType TypeCode { get; }
+        public String YarnTypeDescription { get; }
 
-        public Yarn(YarnType type, int numberOfSkeins)
+        public Yarn(double numberOfSkeins, YarnType typeCode, String yarnTypeDescription)
         {
-            Type = type;
             NumberOfSkeins = numberOfSkeins;
+            TypeCode = typeCode;
+            YarnTypeDescription = yarnTypeDescription;
         }
-
-        public static Yarn CreateYarnFromText(String inputText)
+        
+        public static bool IsMiniSkein(Yarn yarn)
+        {
+            return yarn.YarnTypeDescription.Any(char.IsDigit);
+        }
+        public static Yarn CreateYarnFromText(string inputText)
         {
             //,5,BSK,Bobby BFL
             inputText = inputText.TrimStart(',');
             String[] inputs = inputText.Split(',');
 
-            YarnType yarnType = YarnTypeFactory.createYarnTypeFromText(inputs[1]);
-            int quantity = int.Parse(inputs[0]);
+            double quantity = double.Parse(inputs[0]);
+            YarnType yarnTypeCode = YarnTypeFactory.CreateYarnTypeCodeFromText(inputs[1]);
+            String yarnTypeDescription = inputs[2];
+            Yarn yarn = new Yarn(quantity, yarnTypeCode, yarnTypeDescription);
 
-            Yarn yarn = new Yarn(yarnType, quantity);
+            if (IsMiniSkein(yarn))
+            {
+                YarnTypeFactory.ConvertToMiniSkeinType(yarn);
+                return yarn;
+            }
             return yarn;
         }
+    
+        
     }
 
     
