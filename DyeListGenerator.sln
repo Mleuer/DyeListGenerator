@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DyeListGenerator", "DyeListGenerator\DyeListGenerator.csproj", "{A4820AB8-4F7A-4C2A-A62A-34658B653999}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DyeListGenerator.Test", "DyeListGenerator.Test\DyeListGenerator.Test.csproj", "{AEF4EEE9-0D51-4F2F-B737-65E4C212843C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{A4820AB8-4F7A-4C2A-A62A-34658B653999}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A4820AB8-4F7A-4C2A-A62A-34658B653999}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A4820AB8-4F7A-4C2A-A62A-34658B653999}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AEF4EEE9-0D51-4F2F-B737-65E4C212843C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AEF4EEE9-0D51-4F2F-B737-65E4C212843C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AEF4EEE9-0D51-4F2F-B737-65E4C212843C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AEF4EEE9-0D51-4F2F-B737-65E4C212843C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
