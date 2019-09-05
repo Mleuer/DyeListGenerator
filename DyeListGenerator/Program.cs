@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using CsvHelper;
 
 namespace DyeListGenerator
 {
@@ -6,7 +9,10 @@ namespace DyeListGenerator
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            String csvFilePath = args[0];
+            var inputFile = new FileStream(csvFilePath, FileMode.Open);
+            Customer.GenerateCustomers(inputFile);
+
         }
     }
 }
