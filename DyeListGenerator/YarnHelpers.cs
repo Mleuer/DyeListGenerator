@@ -5,9 +5,9 @@ using System.Reflection;
 
 namespace DyeListGenerator
 {
-    public static class YarnTypeFactory
+    public static class YarnFactory
     {
-        public static YarnType CreateYarnTypeCodeFromText(string input)
+        public static YarnType CreateYarnTypeFromText(string input)
         {
             String upperInput = input.ToUpper();
             switch (upperInput)
@@ -55,49 +55,7 @@ namespace DyeListGenerator
             return (yarnType, quantity);
         }
     }
-    
-    public enum YarnType
-    {
-        [YarnTypeProperties(5, MiniClassy)]
-        Classy,
-        [YarnTypeProperties(5, MiniClassyWCashmere)]
-        ClassyWCashmere,
-        [YarnTypeProperties(4, MiniSmooshy)]
-        Smooshy,
-        [YarnTypeProperties(4, MiniSmooshyWCashmere)]
-        SmooshyWCashmere,
-        [YarnTypeProperties(4, MiniJilly)]
-        Jilly,
-        [YarnTypeProperties(4, MiniJillyWCashmere)]
-        JillyWCashmere,
-        [YarnTypeProperties(4, MiniJillyLaceCashmere)]
-        JillyLaceCashmere,
-        [YarnTypeProperties(4, MiniCosette)]
-        Cosette,
-        [YarnTypeProperties(5, MiniCity)]
-        City,
-        Mohair,
-        [YarnTypeProperties(4, MiniBFL2Ply)]
-        BFL2Ply,
-        [YarnTypeProperties(4, MiniBFLSock)]
-        BFLSock,
-        [YarnTypeProperties(4, MiniBFLDK)]
-        BFLDK,
-        MiniClassy,
-        MiniClassyWCashmere,
-        MiniSmooshy,
-        MiniSmooshyWCashmere,
-        MiniJilly,
-        MiniJillyWCashmere,
-        MiniJillyLaceCashmere,
-        MiniCosette,
-        MiniCity,
-        MiniMohair,
-        MiniBFL2Ply,
-        MiniBFLSock,
-        MiniBFLDK
-    }
-    
+
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = false, Inherited = true)]
     public class YarnTypePropertiesAttribute : Attribute
     {
@@ -139,8 +97,7 @@ namespace DyeListGenerator
                 FieldInfo field = type.GetField(name);
                 if (field != null)
                 {
-                    YarnTypePropertiesAttribute yarnTypeProperties =
-                        Attribute.GetCustomAttribute(field, typeof(YarnTypePropertiesAttribute)) as YarnTypePropertiesAttribute;
+                    YarnTypePropertiesAttribute yarnTypeProperties = Attribute.GetCustomAttribute(field, typeof(YarnTypePropertiesAttribute)) as YarnTypePropertiesAttribute;
                     if (yarnTypeProperties != null)
                     {
                         return yarnTypeProperties;
@@ -150,4 +107,14 @@ namespace DyeListGenerator
             throw new ArgumentException();
         }
 }
+
+    public static class YarnColorExtension
+    {
+        public static String GetName(this Color color)
+        {
+            String colorName = color.ToString();
+            colorName = colorName.Replace('_', ' ');
+            return colorName;
+        }
+    }
 }

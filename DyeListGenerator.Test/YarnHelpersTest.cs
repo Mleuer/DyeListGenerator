@@ -3,14 +3,14 @@ using NUnit.Framework;
 
 namespace DyeListGenerator.Test
 {
-    public class YarnTypeFactoryTest
+    public class YarnHelpersTest
     {
         [Test]
         public void CreateYarnTypeCodeFromTextShouldReturnYarnTypeCodeAsBFLSock()
         {
             String typeCode = "BSK";
 
-            YarnType yarnType = YarnTypeFactory.CreateYarnTypeCodeFromText(typeCode);
+            YarnType yarnType = YarnFactory.CreateYarnTypeFromText(typeCode);
             
             Assert.AreEqual(YarnType.BFLSock, yarnType);
 
@@ -22,7 +22,7 @@ namespace DyeListGenerator.Test
             double quantity = 2;
             YarnType yarnType = YarnType.Classy;
             
-           (YarnType updatedYarnType, double updatedQuantity) = YarnTypeFactory.ModifyValuesForMiniSkeins(yarnDescription, quantity, yarnType);
+           (YarnType updatedYarnType, double updatedQuantity) = YarnFactory.ModifyValuesForMiniSkeins(yarnDescription, quantity, yarnType);
            
            Assert.AreEqual(YarnType.MiniClassy, updatedYarnType);
            Assert.AreEqual(10, updatedQuantity);
@@ -36,11 +36,19 @@ namespace DyeListGenerator.Test
             double quantity = 2;
             YarnType yarnType = YarnType.Classy;
             
-            (YarnType updatedYarnType, double updatedQuantity) = YarnTypeFactory.ModifyValuesForMiniSkeins(yarnDescription, quantity, yarnType);
+            (YarnType updatedYarnType, double updatedQuantity) = YarnFactory.ModifyValuesForMiniSkeins(yarnDescription, quantity, yarnType);
            
             Assert.AreEqual(YarnType.Classy, updatedYarnType);
             Assert.AreEqual(2, updatedQuantity);
 
+        } 
+        
+        [Test]
+        public void GetNameShouldSubstituteSpacesForUnderscores()
+        {
+            Color color = Color.DESERT_CITY_WATTAGE;
+            Assert.AreEqual("Desert City Wattage", color.GetName());
         }
+        
     }
 }

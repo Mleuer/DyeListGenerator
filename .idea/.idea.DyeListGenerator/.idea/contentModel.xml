@@ -19,7 +19,7 @@
         </e>
         <e p="Program.cs" t="Include" />
         <e p="Yarn.cs" t="Include" />
-        <e p="YarnTypeFactory.cs" t="Include" />
+        <e p="YarnHelpers.cs" t="Include" />
       </e>
       <e p="DyeListGenerator.sln" t="IncludeFlat" />
       <e p="DyeListGenerator.Test" t="IncludeRecursive">
@@ -33,8 +33,8 @@
             </e>
           </e>
         </e>
+        <e p="YarnHelpersTest.cs" t="Include" />
         <e p="YarnTest.cs" t="Include" />
-        <e p="YarnTypeFactoryTest.cs" t="Include" />
       </e>
       <e p="packages" t="ExcludeRecursive" />
     </e>
