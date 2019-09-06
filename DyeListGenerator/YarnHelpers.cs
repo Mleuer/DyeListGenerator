@@ -43,7 +43,8 @@ namespace DyeListGenerator
             }
         }
 
-        public static (YarnType, double) ModifyValuesForMiniSkeins(string yarnDescription, double quantity, YarnType yarnType)
+        public static (YarnType, double) ModifyValuesForMiniSkeins(string yarnDescription, double quantity,
+            YarnType yarnType)
         {
             if (yarnDescription.Any(char.IsDigit))
             {
@@ -52,6 +53,7 @@ namespace DyeListGenerator
                 YarnType miniType = yarnType.GetCorrespondingMiniType();
                 return (miniType, quantity);
             }
+
             return (yarnType, quantity);
         }
     }
@@ -67,7 +69,6 @@ namespace DyeListGenerator
             MiniConversionConstant = miniConversionConstant;
             CorrespondingMiniType = miniType;
         }
-        
     }
 
     public static class YarnTypeExtension
@@ -97,24 +98,16 @@ namespace DyeListGenerator
                 FieldInfo field = type.GetField(name);
                 if (field != null)
                 {
-                    YarnTypePropertiesAttribute yarnTypeProperties = Attribute.GetCustomAttribute(field, typeof(YarnTypePropertiesAttribute)) as YarnTypePropertiesAttribute;
+                    YarnTypePropertiesAttribute yarnTypeProperties =
+                        Attribute.GetCustomAttribute(field, typeof(YarnTypePropertiesAttribute)) as YarnTypePropertiesAttribute;
                     if (yarnTypeProperties != null)
                     {
                         return yarnTypeProperties;
                     }
                 }
             }
-            throw new ArgumentException();
-        }
-}
 
-    public static class YarnColorExtension
-    {
-        public static String GetName(this Color color)
-        {
-            String colorName = color.ToString();
-            colorName = colorName.Replace('_', ' ');
-            return colorName;
+            throw new ArgumentException();
         }
     }
 }

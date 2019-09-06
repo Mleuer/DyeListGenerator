@@ -18,12 +18,14 @@
           </e>
         </e>
         <e p="Program.cs" t="Include" />
+        <e p="Util.cs" t="Include" />
         <e p="Yarn.cs" t="Include" />
         <e p="YarnHelpers.cs" t="Include" />
       </e>
       <e p="DyeListGenerator.sln" t="IncludeFlat" />
       <e p="DyeListGenerator.Test" t="IncludeRecursive">
         <e p="bin" t="ExcludeRecursive" />
+        <e p="CustomerTest.cs" t="Include" />
         <e p="DyeListGenerator.Test.csproj" t="IncludeRecursive" />
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">

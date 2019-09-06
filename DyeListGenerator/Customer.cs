@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using CsvHelper;
+using MissingFieldException = CsvHelper.MissingFieldException;
 
 
 namespace DyeListGenerator
@@ -11,6 +12,17 @@ namespace DyeListGenerator
     {
         public String Name { get; private set; } 
         public List<Yarn> Order { get; private set; }
+
+        public Customer()
+        {
+            Order = new List<Yarn>();
+        }
+
+        public Customer(String name, List<Yarn> order)
+        {
+            Name = name;
+            Order = order;
+        }
 
 
         public static List<Customer> GenerateCustomers(Stream stream)
@@ -46,26 +58,31 @@ namespace DyeListGenerator
 
                         if (currentCustomer != null)
                         {
-                            double quantity = csv.GetField<double>(1);
-                            YarnType yarntype = YarnFactory.CreateYarnTypeFromText(csv.GetField<String>(2));
-                            csv.GetField(3);
-                            csv.GetField(4);
+                            Yarn yarn;
+                            try
+                            {
+                                double quantity = csv.GetField<double>(1);
+                                YarnType yarntype = YarnFactory.CreateYarnTypeFromText(csv.GetField<String>(2));
+                                String yarnTypeDescription = csv.GetField<String>(3);
+                                yarn = new Yarn(quantity, yarntype, yarnTypeDescription);
+                                
+                                if (csv.TryGetField<String>(4, out String colorName))
+                                {
+                                    yarn.Color = colorName;
+                                }
+                                currentCustomer.Order.Add(yarn);
+                            }
+                            
+                            catch (MissingFieldException exception)
+                            {
+                                Console.WriteLine(exception);
+                                continue;
+                            }
                         }
-
-
-//                        var customer = new Customer
-//                        {
-//                            
-//                            Name = csv.GetField<int>("Id"),
-//                            Order = { }csv.GetField("Name")
-//                        };
-//                        customers.Add(customer);
+                        
                     }
                 }
             }
-            
-            
-
             return customers;
         }
         

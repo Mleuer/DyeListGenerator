@@ -41,14 +41,7 @@ namespace DyeListGenerator.Test
             Assert.AreEqual(YarnType.Classy, updatedYarnType);
             Assert.AreEqual(2, updatedQuantity);
 
-        } 
-        
-        [Test]
-        public void GetNameShouldSubstituteSpacesForUnderscores()
-        {
-            Color color = Color.DESERT_CITY_WATTAGE;
-            Assert.AreEqual("Desert City Wattage", color.GetName());
         }
-        
+
     }
 }
