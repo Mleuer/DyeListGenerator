@@ -58,28 +58,13 @@ namespace DyeListGenerator
 
                         if (currentCustomer != null)
                         {
-                            Yarn yarn;
                             try
                             {
-                                double quantity = csv.GetField<double>(1);
-                                YarnType yarntype = YarnFactory.CreateYarnTypeFromText(csv.GetField<String>(2));
-                                String yarnTypeDescription = csv.GetField<String>(3);
-                                yarn = new Yarn(quantity, yarntype, yarnTypeDescription);
-                                
-                                if (csv.TryGetField<String>(4, out String colorName))
-                                {
-                                    yarn.Color = colorName;
-                                }
+                                Yarn yarn = Yarn.CreateYarnFromCSV(csv);
                                 currentCustomer.Order.Add(yarn);
                             }
-                            
-                            catch (MissingFieldException exception)
-                            {
-                                Console.WriteLine(exception);
-                                continue;
-                            }
+                            catch (MissingFieldException) { }
                         }
-                        
                     }
                 }
             }

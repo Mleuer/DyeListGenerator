@@ -1,5 +1,7 @@
 using System;
 using System.Linq;
+using CsvHelper;
+using MissingFieldException = System.MissingFieldException;
 
 namespace DyeListGenerator
 {
@@ -37,6 +39,31 @@ namespace DyeListGenerator
             Yarn yarn = new Yarn(quantity, yarnType, yarnTypeDescription);
 
             return yarn;
+        }
+        
+        public static Yarn CreateYarnFromCSV(CsvReader csv)
+        {
+            Yarn yarn;
+            try
+            {
+                double quantity = csv.GetField<double>(1);
+                YarnType yarntype = YarnFactory.CreateYarnTypeFromText(csv.GetField<String>(2));
+                String yarnTypeDescription = csv.GetField<String>(3);
+                yarn = new Yarn(quantity, yarntype, yarnTypeDescription);
+
+                if (csv.TryGetField<String>(4, out String colorName))
+                {
+                    yarn.Color = colorName;
+                }
+
+                return yarn;
+            }
+
+            catch (MissingFieldException exception)
+            {
+                Console.WriteLine(exception);
+                throw;
+            }
         }
     }
 

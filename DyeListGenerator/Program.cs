@@ -11,8 +11,9 @@ namespace DyeListGenerator
         {
             String csvFilePath = args[0];
             var inputFile = new FileStream(csvFilePath, FileMode.Open);
-            Customer.GenerateCustomers(inputFile);
-
+            List<Customer> customers = Customer.GenerateCustomers(inputFile);
+            return;
+            
         }
     }
 }
