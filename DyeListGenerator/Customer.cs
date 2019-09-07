@@ -47,30 +47,36 @@ namespace DyeListGenerator
 
                         if (yarnDataParsable)
                         {
-                            var customerName = csv.Parser.Context.Record[0];
-                            if ( customerName != String.Empty)
+                            var firstEntryOfLine = csv.Parser.Context.Record[0];
+                            
+                            if ((firstEntryOfLine != String.Empty) && (IsTotalLine(firstEntryOfLine) == false))
                             {
+                                string customerName = firstEntryOfLine;
                                 currentCustomer = new Customer() {Name = customerName};
                                 customers.Add(currentCustomer);
                                 continue;
                             }
-                        }
-
-                        if (currentCustomer != null)
-                        {
-                            try
+                            
+                            if (currentCustomer != null)
                             {
-                                Yarn yarn = Yarn.CreateYarnFromCSV(csv);
-                                currentCustomer.Order.Add(yarn);
+                                try
+                                {
+                                    Yarn yarn = Yarn.CreateYarnFromCSV(csv);
+                                    currentCustomer.Order.Add(yarn);
+                                }
+                                catch (MissingFieldException) { }
                             }
-                            catch (MissingFieldException) { }
                         }
                     }
                 }
             }
             return customers;
         }
-        
+
+        public static bool IsTotalLine(String firstEntryOfLine)
+        {
+            return firstEntryOfLine.EndsWith(" Total:");
+        }
     }
     
 }

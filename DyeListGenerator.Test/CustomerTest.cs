@@ -40,5 +40,21 @@ namespace DyeListGenerator.Test
             
             Assert.True(expectedCustomer.Count == 1);
         }
+
+        [Test]
+        public void IsTotalLineReturnsTrueWhenLineEndsWithTotal()
+        {
+            String totalLine = "Birdhouse Yarns Total:";
+
+            Assert.True(Customer.IsTotalLine(totalLine));
+        }
+        
+        [Test]
+        public void IsTotalLineReturnsFalseWhenLineDoesNotEndWithTotal()
+        {
+            String totalLine = "Birdhouse Yarns";
+
+            Assert.False(Customer.IsTotalLine(totalLine));
+        }
     }
 }

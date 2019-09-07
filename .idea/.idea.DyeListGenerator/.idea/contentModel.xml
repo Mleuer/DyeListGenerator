@@ -35,6 +35,7 @@
             </e>
           </e>
         </e>
+        <e p="UtilTest.cs" t="Include" />
         <e p="YarnHelpersTest.cs" t="Include" />
         <e p="YarnTest.cs" t="Include" />
       </e>
