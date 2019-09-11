@@ -9,7 +9,9 @@
       <e p="DyeListGenerator" t="IncludeRecursive">
         <e p="bin" t="ExcludeRecursive" />
         <e p="Customer.cs" t="Include" />
+        <e p="DyeListGenerator.cs" t="Include" />
         <e p="DyeListGenerator.csproj" t="IncludeRecursive" />
+        <e p="MasterDyeList.cs" t="Include" />
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">
             <e p="netcoreapp2.1" t="Include">

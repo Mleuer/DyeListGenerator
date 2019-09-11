@@ -10,8 +10,11 @@ namespace DyeListGenerator
         static void Main(string[] args)
         {
             String csvFilePath = args[0];
+            String masterDyeListFilePath = args[1];
             var inputFile = new FileStream(csvFilePath, FileMode.Open);
-            List<Customer> customers = Customer.GenerateCustomers(inputFile);
+            var dyeListData = new FileStream(masterDyeListFilePath, FileMode.Open);
+
+            DyeListGenerator.GenerateDyeList(inputFile, dyeListData);
             return;
             
         }
