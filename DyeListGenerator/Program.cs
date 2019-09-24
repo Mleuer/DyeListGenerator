@@ -10,13 +10,17 @@ namespace DyeListGenerator
         static void Main(string[] args)
         {
             String csvFilePath = args[0];
-            String masterDyeListFilePath = args[1];
             var inputFile = new FileStream(csvFilePath, FileMode.Open);
-            var dyeListData = new FileStream(masterDyeListFilePath, FileMode.Open);
-
-            DyeListGenerator.GenerateDyeList(inputFile, dyeListData);
-            return;
             
+            var masterDyeListData = typeof(Program).Assembly.GetManifestResourceStream(typeof(Program), "Resources.MasterDyeList.xlsx");
+
+            if (args.Length > 1)
+            {
+                String masterDyeListFilePath = args[1];
+                masterDyeListData = new FileStream(masterDyeListFilePath, FileMode.Open);
+            }
+            
+            DyeListGenerator.GenerateDyeList(inputFile, masterDyeListData);
         }
     }
 }
