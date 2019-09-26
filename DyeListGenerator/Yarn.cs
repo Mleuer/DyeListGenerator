@@ -1,15 +1,16 @@
 using System;
 using System.Linq;
 using CsvHelper;
+using OfficeOpenXml.FormulaParsing.Excel.Operators;
 using MissingFieldException = System.MissingFieldException;
 
 namespace DyeListGenerator
 {
     public class Yarn
     {
-        public double NumberOfSkeins { get; }
-        public YarnType YarnType { get; }
-        public String YarnTypeDescription { get; }
+        public double NumberOfSkeins { get; set; }
+        public YarnType YarnType { get; set; }
+        public String YarnTypeDescription { get; set; }
         public String Color { get; set; }
 
         public bool IsMiniSkein
@@ -22,6 +23,26 @@ namespace DyeListGenerator
             NumberOfSkeins = numberOfSkeins;
             YarnType = yarnType;
             YarnTypeDescription = yarnTypeDescription;
+        }
+        public Yarn() {}
+
+        public static bool AreEquivalent(Yarn yarn1, Yarn yarn2)
+        {
+            return (yarn1.IsMiniSkein == yarn2.IsMiniSkein &&
+                    yarn1.YarnType == yarn2.YarnType &&
+                    yarn1.YarnTypeDescription == yarn2.YarnTypeDescription &&
+                    yarn1.Color == yarn2.Color);
+        }
+
+        public static Yarn operator +(Yarn yarn, Yarn addend)
+        {
+            if (AreEquivalent(yarn, addend))
+            {
+                double sum = yarn.NumberOfSkeins + addend.NumberOfSkeins;
+                Yarn newYarn = new Yarn() {NumberOfSkeins = sum, YarnType = yarn.YarnType, YarnTypeDescription = yarn.YarnTypeDescription, Color = yarn.Color};
+                return newYarn;
+            }
+            throw new ArgumentException("Yarn are different types");
         }
 
         public static Yarn CreateYarnFromText(string inputText)

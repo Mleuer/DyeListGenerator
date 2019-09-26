@@ -23,6 +23,7 @@
         <e p="Resources" t="Include">
           <e p="MasterDyeList.xlsx" t="Include" />
         </e>
+        <e p="Resources.Designer.cs" t="Include" />
         <e p="Util.cs" t="Include" />
         <e p="Yarn.cs" t="Include" />
         <e p="YarnHelpers.cs" t="Include" />
@@ -32,6 +33,7 @@
         <e p="bin" t="ExcludeRecursive" />
         <e p="CustomerTest.cs" t="Include" />
         <e p="DyeListGenerator.Test.csproj" t="IncludeRecursive" />
+        <e p="MasterDyeListTest.cs" t="Include" />
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">
             <e p="netcoreapp2.1" t="Include">

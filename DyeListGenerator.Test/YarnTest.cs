@@ -44,5 +44,29 @@ namespace DyeListGenerator.Test
             
             Assert.True(yarn.IsMiniSkein);
         }
+
+        [Test]
+        public void AddingTwoYarnTogetherShouldSumTheQuantitiesWhenTheyHaveTheSameProperties()
+        {
+            Yarn yarn1 = new Yarn() {NumberOfSkeins = 10, YarnType = YarnType.Classy, YarnTypeDescription = "Classy S.W. Merino Worsted", Color = "A Little Night Music"};
+            Yarn yarn2 = new Yarn() {NumberOfSkeins = 15, YarnType = YarnType.Classy, YarnTypeDescription = "Classy S.W. Merino Worsted", Color = "A Little Night Music"};
+
+            Yarn totalYarn = yarn1 + yarn2;
+            
+            Assert.AreEqual(25, totalYarn.NumberOfSkeins);
+        }
+        
+        [Test]
+        public void AddingTwoYarnTogetherShouldNotSumTheQuantitiesWhenTheyDoNotHaveTheSameProperties()
+        {
+            var yarn1 = new Yarn() {NumberOfSkeins = 10, YarnType = YarnType.Classy, YarnTypeDescription = "lassy S.W. Merino Worsted", Color = "A Little Night Music"};
+            var yarn2 = new Yarn() {NumberOfSkeins = 15, YarnType = YarnType.Classy, YarnTypeDescription = "Classy S.W. Merino Worsted", Color = "A Little Night Music"};
+
+
+            Assert.Throws<ArgumentException>(() =>
+            {
+                Yarn totalYarn = yarn1 + yarn2;
+            });
+        }
     }
 }
