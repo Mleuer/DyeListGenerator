@@ -43,7 +43,7 @@ namespace DyeListGenerator
                         if (Yarn.AreEquivalent(yarn1, yarn2))
                         {
                             yarn1 += yarn2;
-                            combinedYarnOrders.Remove(yarn2);
+                            combinedYarnOrders.RemoveAt(j);
                         }
                     }
                 }

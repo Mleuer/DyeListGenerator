@@ -26,6 +26,21 @@ namespace DyeListGenerator
         }
         public Yarn() {}
 
+        public override bool Equals(object obj)
+        {
+            if ((obj == null) || this.GetType() != obj.GetType()) 
+            {
+                return false;
+            }
+            else { 
+                Yarn yarn = (Yarn) obj; 
+                return (this.YarnType == yarn.YarnType) && 
+                       (this.Color == yarn.Color) &&
+                       (this.YarnTypeDescription.Equals((yarn.YarnTypeDescription))) &&
+                       (this.IsMiniSkein == yarn.IsMiniSkein);
+            }   
+        }
+
         public static bool AreEquivalent(Yarn yarn1, Yarn yarn2)
         {
             return (yarn1.IsMiniSkein == yarn2.IsMiniSkein &&

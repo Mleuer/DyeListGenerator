@@ -38,7 +38,7 @@ namespace DyeListGenerator.Test
 
             ISet<Yarn> actualYarnTotals = MasterDyeList.ExtractYarnCounts(customers);
             
-            CollectionAssert.AreEquivalent(yarnTotals, actualYarnTotals);
+            Assert.AreEqual(yarnTotals, actualYarnTotals);
         }
     }
 }
