@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using OfficeOpenXml;
 
@@ -31,22 +32,21 @@ namespace DyeListGenerator
             ISet<Yarn> yarnCounts = ExtractYarnCounts(customers);
             Dictionary<string, int> yarnTypeWithColumnNumber = ExtractYarnTypes();
             Dictionary<string, int> colorWithRowNumber = ExtractColorNames();
-
+            List<Yarn> problemYarns = new List<Yarn>();
+            
             foreach (var yarnItem in yarnCounts)
             {
-                foreach (var yarnType in yarnTypeWithColumnNumber)
+                try
                 {
-                    foreach (var color in colorWithRowNumber)
-                    {
-                        if (yarnItem.YarnType.ToString().Equals(yarnType.Key, StringComparison.InvariantCultureIgnoreCase) &&
-                            yarnItem.Color.Equals(color.Key, StringComparison.InvariantCultureIgnoreCase))
-                        {
-                            Package.Workbook.Worksheets[0].Cells[color.Value, yarnType.Value].RichText.Text
-                                .Replace("", yarnItem.NumberOfSkeins.ToString());
-                        }
-                    }
+                    (int, int) destinationCell = (yarnTypeWithColumnNumber[yarnItem.YarnType.ToString()], colorWithRowNumber[yarnItem.Color.ToUpper()]);
+                    Package.Workbook.Worksheets[0].Cells[destinationCell.Item1, destinationCell.Item2].RichText.Text = ((Int16)yarnItem.NumberOfSkeins).ToString(CultureInfo.CurrentCulture);
+                }
+                catch (KeyNotFoundException)
+                {
+                    problemYarns.Add(yarnItem);
                 }
             }
+            Package.SaveAs(new FileInfo("/Users/mattleuer/Developer/DyeListGenerator/DyeListGenerator.Test/Resources/MasterDyeListTestSave.xlsx"));
         }
 
         private Dictionary<string, int> ExtractYarnTypes()

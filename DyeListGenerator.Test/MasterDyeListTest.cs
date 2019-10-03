@@ -1,14 +1,18 @@
 using System.Collections.Generic;
+using Moq;
 using NUnit.Framework;
+using OfficeOpenXml;
 
 namespace DyeListGenerator.Test
 {
     public class MasterDyeListTest
     {
-        [Test]
-        public void ExtractYarnCountsShouldReturnExpectedYarnCounts()
+        private List<Customer> Customers;
+
+        [SetUp]
+        public void Setup()
         {
-            List<Customer> customers = new List<Customer>()
+            Customers = new List<Customer>
             {
                 new Customer("Birdhouse", new List<Yarn>()
                 {
@@ -27,7 +31,11 @@ namespace DyeListGenerator.Test
                     new Yarn() {NumberOfSkeins = 3, YarnType = YarnType.SmooshyWCashmere, YarnTypeDescription = "Smooshy Cashmere (Mixed Lot)", Color = "Milky Spite"}
                 })
             };
+        }
 
+        [Test]
+        public void ExtractYarnCountsShouldReturnExpectedYarnCounts()
+        {
             ISet<Yarn> yarnTotals = new HashSet<Yarn>()
             {
                 new Yarn() {NumberOfSkeins = 35, YarnType = YarnType.Classy, YarnTypeDescription = "Classy S.W. Merino Worsted", Color = "A Little Night Music"},
@@ -36,9 +44,29 @@ namespace DyeListGenerator.Test
                 new Yarn() {NumberOfSkeins = 10, YarnType = YarnType.Classy, YarnTypeDescription = "Classy Merino Worsted", Color = "A Little Night Music"},
             };
 
-            ISet<Yarn> actualYarnTotals = MasterDyeList.ExtractYarnCounts(customers);
+            ISet<Yarn> actualYarnTotals = MasterDyeList.ExtractYarnCounts(Customers);
             
             Assert.AreEqual(yarnTotals, actualYarnTotals);
         }
+
+        [Test]
+
+        public void Write()
+        {
+            var masterDyeListData = typeof(MasterDyeListTest).Assembly.GetManifestResourceStream(typeof(MasterDyeListTest), "Resources.MasterDyeList.xlsx");
+
+            MasterDyeList masterDyeList = new MasterDyeList(masterDyeListData);
+            masterDyeList.Write(Customers);
+            
+        }
     }
 }
+
+
+
+
+
+
+
+
+
