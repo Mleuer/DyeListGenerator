@@ -27,29 +27,36 @@ namespace DyeListGenerator
             Package.Dispose();
         }
 
-        public void Write(List<Customer> customers)
+        public void Write(List<Customer> customers, Stream output)
         {
             ISet<Yarn> yarnCounts = ExtractYarnCounts(customers);
-            Dictionary<string, int> yarnTypeWithColumnNumber = ExtractYarnTypes();
-            Dictionary<string, int> colorWithRowNumber = ExtractColorNames();
+            Dictionary<string, int> columnNumbers = FindCorrespondingColumns();
+            Dictionary<string, int> rowNumbers = FindCorrespondingRows();
             List<Yarn> problemYarns = new List<Yarn>();
             
             foreach (var yarnItem in yarnCounts)
             {
+                if (yarnItem.Color == null || yarnItem.YarnType == null)
+                {
+                    problemYarns.Add(yarnItem);
+                    continue;
+                }
                 try
                 {
-                    (int, int) destinationCell = (yarnTypeWithColumnNumber[yarnItem.YarnType.ToString()], colorWithRowNumber[yarnItem.Color.ToUpper()]);
-                    Package.Workbook.Worksheets[0].Cells[destinationCell.Item1, destinationCell.Item2].RichText.Text = ((Int16)yarnItem.NumberOfSkeins).ToString(CultureInfo.CurrentCulture);
+                    (int, int) destinationCell = (rowNumbers[yarnItem.Color.ToUpper()], columnNumbers[yarnItem.YarnType.GetTextRepresentation()]);
+                    //Package.Workbook.Worksheets[0].Cells[destinationCell.Item1, destinationCell.Item2].RichText.Text = ((Int16)yarnItem.NumberOfSkeins).ToString(CultureInfo.CurrentCulture);
+                    //Package.Workbook.Worksheets[0].SetValue(destinationCell.Item1, destinationCell.Item2, ((Int16)yarnItem.NumberOfSkeins).ToString(CultureInfo.CurrentCulture));
+                    Package.Workbook.Worksheets[0].Cells[destinationCell.Item1, destinationCell.Item2].Value = ((Int16)yarnItem.NumberOfSkeins).ToString(CultureInfo.CurrentCulture);
                 }
                 catch (KeyNotFoundException)
                 {
                     problemYarns.Add(yarnItem);
                 }
             }
-            Package.SaveAs(new FileInfo("/Users/mattleuer/Developer/DyeListGenerator/DyeListGenerator.Test/Resources/MasterDyeListTestSave.xlsx"));
+            Package.SaveAs(output);
         }
 
-        private Dictionary<string, int> ExtractYarnTypes()
+        private Dictionary<string, int> FindCorrespondingColumns()
         {
             Dictionary<string, int> yarnTypes = new Dictionary<string, int>();
 
@@ -62,7 +69,7 @@ namespace DyeListGenerator
             return yarnTypes;
         }
 
-        private Dictionary<string, int> ExtractColorNames()
+        private Dictionary<string, int> FindCorrespondingRows()
         {
             Dictionary<string, int> colors = new Dictionary<string, int>();
             

@@ -15,7 +15,7 @@ namespace DyeListGenerator
 
         public bool IsMiniSkein
         {
-            get { return YarnTypeDescription.Any(char.IsDigit); }
+            get { return YarnTypeDescription.Contains("mini", StringComparison.CurrentCultureIgnoreCase); }
         }
 
         public Yarn(double numberOfSkeins, YarnType yarnType, String yarnTypeDescription)
@@ -105,39 +105,82 @@ namespace DyeListGenerator
 
     public enum YarnType
     {
-        [YarnTypeProperties(5, MiniClassy)] Classy,
+        [YarnTypeProperties(5, MiniClassy)] 
+        Classy,
 
-        [YarnTypeProperties(5, MiniClassyWCashmere)]
+        [YarnTypeProperties(5, MiniClassyWCashmere, "Classy/Cashmere")]
         ClassyWCashmere,
-        [YarnTypeProperties(4, MiniSmooshy)] Smooshy,
+        
+        [YarnTypeProperties(4, MiniSmooshy)] 
+        Smooshy,
 
-        [YarnTypeProperties(4, MiniSmooshyWCashmere)]
+        [YarnTypeProperties(4, MiniSmooshyWCashmere, "Smooshy/Cashmere")]
         SmooshyWCashmere,
-        [YarnTypeProperties(4, MiniJilly)] Jilly,
+        
+        [YarnTypeProperties(4, MiniJilly)] 
+        Jilly,
 
-        [YarnTypeProperties(4, MiniJillyWCashmere)]
+        [YarnTypeProperties(4, MiniJillyWCashmere, "Jilly Cash")]
         JillyWCashmere,
 
-        [YarnTypeProperties(4, MiniJillyLaceCashmere)]
+        [YarnTypeProperties(4, MiniJillyLaceCashmere, "Jilly Lace Cash")]
         JillyLaceCashmere,
-        [YarnTypeProperties(4, MiniCosette)] Cosette,
-        [YarnTypeProperties(5, MiniCity)] City,
+        
+        [YarnTypeProperties(4, MiniCosette)] 
+        Cosette,
+        
+        [YarnTypeProperties(5, MiniCity)] 
+        City,
+        
+        [YarnTypeProperties(1, MiniMohair)]
         Mohair,
-        [YarnTypeProperties(4, MiniBFL2Ply)] BFL2Ply,
-        [YarnTypeProperties(4, MiniBFLSock)] BFLSock,
-        [YarnTypeProperties(4, MiniBFLDK)] BFLDK,
+        
+        [YarnTypeProperties(4, MiniBFL2Ply, "BFL 2 Ply")] 
+        BFL2Ply,
+        
+        [YarnTypeProperties(4, MiniBFLSock, "BFL Sock")] 
+        BFLSock,
+        
+        [YarnTypeProperties(4, MiniBFLDK, "BFL Dk")] 
+        BFLDK,
+        
+        [YarnTypeProperties(1, MiniClassy, "Mini Classy")]
         MiniClassy,
+        
+        [YarnTypeProperties(1, MiniClassyWCashmere, "Mini Classy Cash")]
         MiniClassyWCashmere,
+        
+        [YarnTypeProperties(1, MiniSmooshy, "Mini Smooshy")]
         MiniSmooshy,
+        
+        [YarnTypeProperties(1, MiniSmooshyWCashmere, "Mini Smooshy Cash")]
         MiniSmooshyWCashmere,
+        
+        [YarnTypeProperties(1, MiniJilly, "Mini Jilly")]
         MiniJilly,
+        
+        [YarnTypeProperties(1, MiniJillyWCashmere, "Mini Jilly Cash")]
         MiniJillyWCashmere,
+        
+        [YarnTypeProperties(1, MiniJillyLaceCashmere, "Mini Jilly Lace Cash")]
         MiniJillyLaceCashmere,
+        
+        [YarnTypeProperties(1, MiniCosette, "Mini Cosette")]
         MiniCosette,
+        
+        [YarnTypeProperties(1, MiniCity, "Mini City")]
         MiniCity,
+        
+        [YarnTypeProperties(1, MiniMohair, "Mini Mohair")]
         MiniMohair,
+        
+        [YarnTypeProperties(1, MiniBFL2Ply, "Mini BFL 2 Ply")]
         MiniBFL2Ply,
+        
+        [YarnTypeProperties(1, MiniBFLSock, "Mini BFL Sock")]
         MiniBFLSock,
+        
+        [YarnTypeProperties(1, MiniBFLDK, "Mini BFL DK")]
         MiniBFLDK
     }
 }

@@ -63,11 +63,14 @@ namespace DyeListGenerator
     {
         public double MiniConversionConstant { get; }
         public YarnType CorrespondingMiniType { get; }
+        
+        public String TextRepresentation { get; }
 
-        public YarnTypePropertiesAttribute(double miniConversionConstant, YarnType miniType)
+        public YarnTypePropertiesAttribute(double miniConversionConstant, YarnType miniType, string textRepresentation = "")
         {
             MiniConversionConstant = miniConversionConstant;
             CorrespondingMiniType = miniType;
+            TextRepresentation = textRepresentation;
         }
     }
 
@@ -87,6 +90,19 @@ namespace DyeListGenerator
             return miniType;
         }
 
+        public static String GetTextRepresentation(this YarnType yarnType)
+        {
+            YarnTypePropertiesAttribute yarnTypePropertiesAttribute = GetYarnTypeProperties(yarnType);
+            String textRepresentation = yarnTypePropertiesAttribute.TextRepresentation;
+            if (textRepresentation != String.Empty)
+            {
+                return textRepresentation;
+            }
+            else
+            {
+                return yarnType.ToString();
+            }
+        }
         private static YarnTypePropertiesAttribute GetYarnTypeProperties(YarnType yarnType)
         {
             Type type = yarnType.GetType();

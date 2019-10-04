@@ -12,8 +12,7 @@ namespace DyeListGenerator
 
             MasterDyeList masterDyeList = new MasterDyeList(masterDyeListFile);
 
-            Console.WriteLine();
-
+            masterDyeList.Write(customers, new FileStream($"{Directory.GetCurrentDirectory()}/DyeList {DateTime.UtcNow:MM-dd-yy}.xlsx", FileMode.Create));
         }
     }
 }

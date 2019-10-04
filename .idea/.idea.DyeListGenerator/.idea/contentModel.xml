@@ -45,6 +45,7 @@
         <e p="Resources" t="Include">
           <e p="MasterDyeList.xlsx" t="Include" />
           <e p="MasterDyeList.zip" t="Include" />
+          <e p="MasterDyeListTestSave.xlsx" t="Include" />
         </e>
         <e p="UtilTest.cs" t="Include" />
         <e p="YarnHelpersTest.cs" t="Include" />
