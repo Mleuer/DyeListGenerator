@@ -46,7 +46,7 @@ namespace DyeListGenerator
         public static (YarnType, double) ModifyValuesForMiniSkeins(string yarnDescription, double quantity,
             YarnType yarnType)
         {
-            if (yarnDescription.Any(char.IsDigit))
+            if (Yarn.DetermineIfMiniSkein(yarnDescription))
             {
                 double conversionConstant = yarnType.GetMiniConversionConstant();
                 quantity *= conversionConstant;

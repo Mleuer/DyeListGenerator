@@ -15,7 +15,7 @@ namespace DyeListGenerator
 
         public bool IsMiniSkein
         {
-            get { return YarnTypeDescription.Contains("mini", StringComparison.CurrentCultureIgnoreCase); }
+            get { return DetermineIfMiniSkein(YarnTypeDescription); }
         }
 
         public Yarn(double numberOfSkeins, YarnType yarnType, String yarnTypeDescription)
@@ -40,7 +40,7 @@ namespace DyeListGenerator
                        (this.IsMiniSkein == yarn.IsMiniSkein);
             }   
         }
-
+        
         public static bool AreEquivalent(Yarn yarn1, Yarn yarn2)
         {
             return (yarn1.IsMiniSkein == yarn2.IsMiniSkein &&
@@ -62,7 +62,6 @@ namespace DyeListGenerator
 
         public static Yarn CreateYarnFromText(string inputText)
         {
-            //,5,BSK,Bobby BFL
             inputText = inputText.TrimStart(',');
             String[] inputs = inputText.Split(',');
 
@@ -73,24 +72,43 @@ namespace DyeListGenerator
             (yarnType, quantity) = YarnFactory.ModifyValuesForMiniSkeins(yarnTypeDescription, quantity, yarnType);
 
             Yarn yarn = new Yarn(quantity, yarnType, yarnTypeDescription);
+            
+            if (inputs.Length > 3)
+            {
+                yarn.Color = inputs[3];
+            }
 
             return yarn;
         }
-        
-        public static Yarn CreateYarnFromCSV(CsvReader csv)
+
+        public static Yarn CreateYarnFromText(CsvReader reader)
+        {
+            double quantity = reader.GetField<double>(1);
+            YarnType yarnType = YarnFactory.CreateYarnTypeFromText(reader.GetField<String>(2));
+            String yarnTypeDescription = reader.GetField<String>(3);
+
+            (yarnType, quantity) = YarnFactory.ModifyValuesForMiniSkeins(yarnTypeDescription, quantity, yarnType);
+
+            Yarn yarn = new Yarn(quantity, yarnType, yarnTypeDescription);
+            
+            if (reader.TryGetField<String>(4, out String colorName))
+            {
+                yarn.Color = colorName;
+            }
+
+            return yarn;
+        }
+
+        public static bool DetermineIfMiniSkein(String yarnDescription)
+        {
+            return yarnDescription.Contains("mini", StringComparison.CurrentCultureIgnoreCase);
+        }
+        public static Yarn CreateYarnFromCSV(CsvReader reader)
         {
             Yarn yarn;
             try
             {
-                double quantity = csv.GetField<double>(1);
-                YarnType yarntype = YarnFactory.CreateYarnTypeFromText(csv.GetField<String>(2));
-                String yarnTypeDescription = csv.GetField<String>(3);
-                yarn = new Yarn(quantity, yarntype, yarnTypeDescription);
-
-                if (csv.TryGetField<String>(4, out String colorName))
-                {
-                    yarn.Color = colorName;
-                }
+                yarn = CreateYarnFromText(reader);
 
                 return yarn;
             }

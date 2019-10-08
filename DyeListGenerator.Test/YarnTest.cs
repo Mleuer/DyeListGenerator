@@ -41,8 +41,24 @@ namespace DyeListGenerator.Test
         public void IsMiniSkeinShouldReturnTrueWhenDescriptionContainsMini()
         {
             Yarn yarn = new Yarn(5, YarnType.Classy, "Classy 5- 50yd.minis @ $2.90 per skein");
-            
+
             Assert.True(yarn.IsMiniSkein);
+        }
+        
+        [Test]
+        public void IsMiniSkeinShouldConvertQuantityWhenDescriptionContainsMini()
+        {
+            Yarn yarn = Yarn.CreateYarnFromText("1,VM,Classy 5- 50yd.minis @ $2.90 per skein,Amber Glass");
+            
+            Assert.AreEqual(5, yarn.NumberOfSkeins);
+        }
+        
+        [Test]
+        public void IsMiniSkeinShouldConvertYarnTypeWhenDescriptionContainsMini()
+        {
+            Yarn yarn = Yarn.CreateYarnFromText("1,VM,Classy 5- 50yd.minis @ $2.90 per skein,Amber Glass");
+            
+            Assert.AreEqual(YarnType.MiniClassy, yarn.YarnType);
         }
 
         [Test]
