@@ -44,15 +44,15 @@ namespace DyeListGenerator
                 try
                 {
                     (int, int) destinationCell = (rowNumbers[yarnItem.Color.ToUpper()], columnNumbers[yarnItem.YarnType.GetTextRepresentation()]);
-                    //Package.Workbook.Worksheets[0].Cells[destinationCell.Item1, destinationCell.Item2].RichText.Text = ((Int16)yarnItem.NumberOfSkeins).ToString(CultureInfo.CurrentCulture);
-                    //Package.Workbook.Worksheets[0].SetValue(destinationCell.Item1, destinationCell.Item2, ((Int16)yarnItem.NumberOfSkeins).ToString(CultureInfo.CurrentCulture));
-                    Package.Workbook.Worksheets[0].Cells[destinationCell.Item1, destinationCell.Item2].Value = ((Int16)yarnItem.NumberOfSkeins).ToString(CultureInfo.CurrentCulture);
+                    Package.Workbook.Worksheets[0].Cells[destinationCell.Item1, destinationCell.Item2].Value = yarnItem.NumberOfSkeins;
                 }
                 catch (KeyNotFoundException)
                 {
                     problemYarns.Add(yarnItem);
                 }
             }
+
+            Package.Workbook.Worksheets[0].Calculate();
             Package.SaveAs(output);
         }
 
